@@ -1,0 +1,55 @@
+<view class="page">
+    <!-- <view class="page__hd">
+        <view class="page__title">Grid</view>
+        <view class="page__desc">九宫格</view>
+    </view> -->
+    <view class="test-list">
+
+     <navigator url='/pages/person/person'>
+        <view class='test-item bg1' >
+        <image  class="icon-box" mode="widthFix" src="/images/face.png"></image>
+            测颜值
+        </view>
+      </navigator>
+
+       <!-- <navigator url="/pages/face/face">
+        <view class='test-item bg1'>
+          <image  class="icon-box" mode="widthFix" src="/images/face.png"></image>
+          测颜值
+       </view>
+       </navigator> -->
+
+      <navigator url='/pages/flower/flower'>
+        <view class='test-item bg4' url="/">
+        <image  class="icon-box" mode="widthFix" src="/images/flower.png"></image>
+            识花草
+        </view>
+      </navigator>
+       
+      <navigator url='/pages/ani/ani'>
+        <view class='test-item bg2' url="/">
+        <image  class="icon-box" mode="widthFix" src="/images/animal.png"></image>
+            认动物
+        </view>
+      </navigator>
+       
+      <navigator url='/pages/food/food'>
+        <view class='test-item bg3' url="/">
+        <image  class="icon-box" mode="widthFix" src="/images/ct.png"></image>
+            猜菜品
+        </view>
+      </navigator>
+
+     
+       
+    </view>
+
+
+    <view class='footer'>
+      <view class='footer-logo'>
+        <view><image class='logo' src='/images/camera.png' mode='scaleToFill'></image></view>
+        <view>蜻蜓眼</view>
+        <view style='font-size:30rpx;'>Dragonfly eye</view>
+      </view>
+    </view>
+</view>

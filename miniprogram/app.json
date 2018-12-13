@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/person/person",
+    "pages/index/index",
+    "pages/flower/flower",
+    "pages/face/face",
+    "pages/ani/ani",
+    "pages/food/food",
+    "pages/h2c/h2c"
+   
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "蜻蜓眼",
+    "navigationBarTextStyle": "black"
+  }
+}

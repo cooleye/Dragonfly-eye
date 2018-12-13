@@ -1,0 +1,6 @@
+.info-item{
+  margin-top: 40rpx;
+  border-bottom: dashed 1px #aaa;
+  margin-bottom: 50rpx;
+  padding-bottom: 20rpx;
+}

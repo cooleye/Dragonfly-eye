@@ -1,0 +1,68 @@
+/**index.wxss**/
+
+page {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#ECE9E6, #FFFFFF); 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.test-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.test-item{
+  height: 200rpx;
+  background: #f00;
+  color: #fff;
+  font-size: 48rpx;
+  text-align: center;
+  line-height: 200rpx;
+  margin: 10rpx;
+  border-radius: 10rpx;
+  box-shadow: 1px 2px 2px #c0c0c0;
+  /* transition: ease 0.1s all;
+  transform: scale(1) */
+}
+
+/* .test-item:hover{
+  transform: scale(0.95)
+} */
+
+.bg1{
+ background: linear-gradient(#FF416C, #FF4B2B); 
+}
+.bg2{
+ background: linear-gradient(#00B4DB, #0083B0);
+}
+.bg3{
+  background: linear-gradient( #38ef7d,#11998e); 
+}
+.bg4{
+  background: linear-gradient( #FDC830,#F37335); 
+}
+
+.footer{
+  width: 100%;
+  position: absolute;
+  bottom: 40rpx;
+  text-align: center;
+  color: #c0c0c0;
+  font-weight: 800;
+
+}
+
+.logo{
+  width: 100rpx;
+  height: 80rpx;
+}
+
+.icon-box{
+  width: 35px;
+  height: 35px;
+  color: #fff;
+  vertical-align: middle;
+}

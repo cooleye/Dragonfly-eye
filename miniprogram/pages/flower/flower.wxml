@@ -1,0 +1,23 @@
+<view class="container">
+
+    <view class="uploader-container">
+      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+      <view style='margin-top:-60rpx;'   wx:if="{{!showResult}}">选择一张图片或拍一张</view>
+    </view>
+    
+<!-- wx:if="{{showResult}}" -->
+  <view class='info-section'  wx:if="{{showResult}}">
+   <view class='info-title'>分析结果</view>
+    <view class='baike_title'>
+    {{nobody.name}}
+    </view>
+    <image class='baike_img' mode="widthFix" src="{{nobody.baike_info.image_url}}"></image>
+    <view>
+      {{nobody.baike_info.description}}
+    </view>
+
+  </view>
+
+  <button bindtap="doUpload" class="weui-btn mbtn" type="primary">上传图片</button>
+
+</view>

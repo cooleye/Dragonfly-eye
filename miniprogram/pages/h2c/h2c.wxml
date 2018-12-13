@@ -1,0 +1,13 @@
+<view>
+
+<text>hello world</text>
+
+
+<canvas 
+  canvas-id="gameCanvas" 
+  style="width:750rpx; height:350rpx"
+></canvas>
+<button bindtap="createImage">生成图片</button>
+
+
+</view>

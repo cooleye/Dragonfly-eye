@@ -1,0 +1,36 @@
+<view class="container">
+
+      <view class="uploader-container">
+        <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+        <view style='margin-top:-60rpx;'   wx:if="{{!showResult}}">选择一张图片或拍一张</view>
+       </view>
+
+
+ <!-- wx:if="{{showResult}}" -->
+  <view class='info-section'  wx:if="{{showResult}}">
+    <view class='info-title'>分析结果</view>
+
+    <view class="info-item">性别：{{nobody.gender.type == "female" ? "女" : "男"}}</view>
+
+    <view class="info-item">年龄：{{nobody.age}}</view>
+   
+    <view class="info-item">颜值：<text style='color:red'> {{nobody.beauty}}</text></view>
+
+    <view class="info-item">情绪：{{nobody.emotion.type}}</view>
+
+    <view class="info-item">是否带眼睛：{{nobody.glasses.type == "none" ? "无" : "有"}}</view>
+
+    <view class="info-item">人种：{{nobody.race.type == "yellow" ? "黄种人" : (nobody.race.type == "white" ? "白种人" : "黑种人")}}</view>
+   
+  </view>
+
+
+  <view>
+  
+  </view>
+
+  <button bindtap="sharebtn" wx:if="{{showResult}}" class="weui-btn sharebtn" type="warn">生成分享图</button>
+
+  <button bindtap="doUpload" class="weui-btn mbtn" type="primary">上传图片</button>
+
+</view>

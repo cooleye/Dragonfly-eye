@@ -1,0 +1,15 @@
+/* pages/person/person.wxss */
+
+/* .uploader-container{
+  height: 400rpx;
+} */
+
+.sharebtn{
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: 160rpx;
+  width: 90%;
+  left: 5%;
+  z-index: 999;
+}

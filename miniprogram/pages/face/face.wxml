@@ -1,0 +1,33 @@
+<view class="container">
+
+      <view class="uploader-container">
+        <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+        <view style='margin-top:-60rpx;'   wx:if="{{!showResult}}">选择一张图片或拍一张</view>
+       </view>
+
+
+ <!-- wx:if="{{showResult}}" -->
+  <view class='info-section'  wx:if="{{showResult}}">
+   <view class='info-title'>分析结果</view>
+
+   <view class="info-item">性别：{{gender.value == "Female" ? "女" : "男"}}</view>
+
+   <view class="info-item">年龄：{{age.value}}</view>
+   
+   <view class="info-item">
+    颜值： 
+        <view>男生眼中：{{beauty.male_score}} </view>
+        <view>女生眼中：{{beauty.female_score}}</view>
+        <canvas canvas-id="columnCanvas" class="canvas"></canvas>
+   </view>
+
+   <view class="info-item">
+    情绪：{{emo.name}}
+    <canvas style="width: 300px; height: 200px;" class="canvas" canvas-id="radarCanvas"></canvas>
+   </view>
+   
+  </view>
+
+  <button bindtap="doUpload" class="weui-btn mbtn" type="primary">上传图片</button>
+
+</view>
