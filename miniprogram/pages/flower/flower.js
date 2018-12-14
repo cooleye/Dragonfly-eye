@@ -68,10 +68,11 @@ Page({
   onShareAppMessage: function () {
 
     var imgIndex = Math.floor(Math.random() * 3);
-    var imageUrl = this.data.shareImgs[imgIndex];
+
+    var imageUrl = this.data.imgUrl || this.data.shareImgs[imgIndex];
 
     return {
-      title: "你知道这些花花草草叫什么么吗？",
+      title: "我拍到一朵奇葩，你知道叫什么吗？",
       path: '/pages/index/index',
       imageUrl: imageUrl,
       success: function (res) {

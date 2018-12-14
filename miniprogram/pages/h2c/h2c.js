@@ -50,7 +50,6 @@ Page({
     //获取设备宽度，用于求所需画在画布上的图片的高度
     let _this = this;
     wx.getSystemInfo({success:function(res){
-        // console.log(res)
         _this.setData({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight
@@ -60,7 +59,6 @@ Page({
     //获取canvas大小
     var query = wx.createSelectorQuery();
     query.select('.gameCanvas').boundingClientRect(function (rect) {
-      // console.log(rect)
       _this.setData({
         canvasWidth: rect.width,
         canvasHeight:rect.height
@@ -69,29 +67,39 @@ Page({
  
   },
   createImage: function () {
-    let canvasWidth = this.data.canvasWidth,
-      canvasHeight = this.data.canvasHeight;
+    let scale = 2; //图片放大两倍，更清晰
+    console.log(this.data.imgUrl)
+    if (this.data.imgUrl == "/images/renbg.png"){
+      wx.showToast({
+        title: "上传一张图片先！",
+        icon: 'none',
+        duration: 1000
+      })
+    }else{
+      let canvasWidth = this.data.canvasWidth,
+        canvasHeight = this.data.canvasHeight;
 
-    wx.canvasToTempFilePath({     //将canvas生成图片
-      canvasId: 'gameCanvas',
-      x: 0,
-      y: 0,
-      width: canvasWidth,
-      height: canvasHeight,
-      destWidth: canvasWidth,     //截取canvas的宽度
-      destHeight: canvasHeight,   //截取canvas的高度
-      success: function (res) {
-        wx.saveImageToPhotosAlbum({  //保存图片到相册
-          filePath: res.tempFilePath,
-          success: function () {
-            wx.showToast({
-              title: "已经保存到相册了，发个朋友圈吧",
-              duration: 2000
-            })
-          }
-        })
-      }
-    })
+      wx.canvasToTempFilePath({     //将canvas生成图片
+        canvasId: 'gameCanvas',
+        x: 0,
+        y: 0,
+        width: canvasWidth,
+        height: canvasHeight,
+        destWidth: canvasWidth * scale,     //截取canvas的宽度
+        destHeight: canvasHeight * scale,   //截取canvas的高度
+        success: function (res) {
+          wx.saveImageToPhotosAlbum({  //保存图片到相册
+            filePath: res.tempFilePath,
+            success: function () {
+              wx.showToast({
+                title: "已经保存到相册了，发个朋友圈吧",
+                duration: 2000
+              })
+            }
+          })
+        }
+      })
+    }
   },
   doUpload: function () {
     var that = this;
@@ -101,12 +109,8 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-
-        that.setData({
-          imgUrl: res.tempFilePaths[0],
-          showResult: true
-        })
-        let base64 = wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], 'base64')
+        let tempImg = res.tempFilePaths[0];
+        let base64 = wx.getFileSystemManager().readFileSync(tempImg, 'base64')
 
         wx.showLoading({
           title: "人像分析中...",
@@ -125,13 +129,21 @@ Page({
             image_type: "BASE64",
             face_field: "age,beauty,expression,face_shape,gender,glasses,race,emotion"
           }, success: function (res) {
+
             wx.hideLoading();
-            // console.log(res)
-            // console.log(res.data.error_code)
             if (res.statusCode == 200 && res.data.error_code == 0) {
+              that.setData({
+                imgUrl: tempImg,
+                showResult: true
+              })
+
               that.showResult(res.data.result);
             } else {
-              console.log('图片不符合要求，重新上传');
+              wx.showToast({
+                title: '亲，换张图片吧',
+                icon:"",
+                duration:1000
+              })
             }
           }
         })
@@ -148,7 +160,7 @@ Page({
       case "surprise": emo_zh = "惊讶"; break;
       case "fear": emo_zh = "恐惧"; break;
       case "happiness": emo_zh = "开心"; break;
-      default: emo_zh = "未知";
+      default: emo_zh = "神秘，AI无法识别";
     }
     return emo_zh;
   },
@@ -172,7 +184,6 @@ Page({
 
         const ctx = wx.createCanvasContext('gameCanvas');  //创建画布对象  
 
-
         let textLeft = 20;
         let textTop = imageHeight + 180;
         //背景填充
@@ -186,26 +197,23 @@ Page({
 
         ctx.setFontSize(30);      //设置字体大小
         ctx.setFillStyle("#000");   //设置字体颜色
-        ctx.fillText('颜值', textLeft, imageHeight + 50);  //设置字体内容、坐标
+        ctx.fillText('颜值', textLeft, imageHeight + 60);  //设置字体内容、坐标
         ctx.setFontSize(20);
         
          //颜值
         // ctx.fillText('颜值：' + _this.data.nobody.beauty, imageWidth,imageHeight + 50);  //设置字体内容、坐标
         ctx.setFontSize(50);      //设置字体大小
         ctx.setFillStyle("#f00");   //设置字体颜色
-        ctx.fillText(_this.data.nobody.beauty, 100, imageHeight + 50);  //设置字体内容、坐标
+        ctx.fillText(_this.data.nobody.beauty, 100, imageHeight + 60);  //设置字体内容、坐标
 
-        
-
-        let bs = parseInt(_this.data.nobody.beauty);
+        let bs = (_this.data.nobody.beauty - 0 + 15.67).toFixed(2);
+        bs = bs > 99.99 ? 99.99 : bs;
         let evaluates;
-        console.log(_this.data.nobody.gender.type)
         if (_this.data.nobody.gender.type == "male"){
           evaluates = _this.data.evaluates.male;
         }else{
           evaluates = _this.data.evaluates.female;
         }
-        console.log(evaluates)
 
         let rw = "";
         switch(true){
@@ -222,7 +230,7 @@ Page({
         
         ctx.setFontSize(14);      //设置字体大小
         ctx.setFillStyle("#ff6600");  
-        ctx.fillText("超过了全国" + bs + "%的网友" + rw, textLeft,imageHeight + 80);  //设置字体内容、坐标
+        ctx.fillText("超过了全国" + bs + "%的网友," + rw, textLeft,imageHeight + 90);  //设置字体内容、坐标
         
         bs += 15;
         bs = bs >= 99.9 ? 99.9 : bs;
@@ -230,7 +238,6 @@ Page({
         ctx.setFillStyle("#000");  
         ctx.setFontSize(16);
         let nickName = app.globalData.userInfo.nickName;
-        console.log(nickName)
         ctx.fillText('昵称：' + nickName, textLeft, imageHeight + 120);  //设置字体内容、坐标
         ctx.fillText('年龄：' + _this.data.nobody.age, textLeft, imageHeight + 150);  //设置字体内容、坐标
         let gender = _this.data.nobody.gender.type;
@@ -242,8 +249,8 @@ Page({
 
         ctx.setFillStyle("#aaa");
         ctx.setFontSize(12);
-        ctx.fillText('蜻蜓眼', canvasWidth / 2 - 10, canvasHeight - 40);  //设置字体内容、坐标
-        ctx.fillText('Powered by Baidu AI', canvasWidth/2-50, canvasHeight-20);  //设置字体内容、坐标
+        ctx.fillText('蜻蜓眼', canvasWidth / 2 - 15, canvasHeight - 40);  //设置字体内容、坐标
+        ctx.fillText('Powered by Baidu AI', canvasWidth/2-55, canvasHeight-20);  //设置字体内容、坐标
   
 
         ctx.draw();     //开始绘画
@@ -274,7 +281,11 @@ Page({
   onShareAppMessage: function () {
 
     var imgIndex = Math.floor(Math.random() * 7);
-    var imageUrl = this.data.imgUrl;
+    var imageUrl;
+    if (this.data.imgUrl == "/images/renbg.png"){
+      imageUrl = this.data.shareImgs[imgIndex];
+    }
+    
 
     return {
       title: "我的颜值在人工智能眼中得了这些分，你的呢？",
@@ -282,14 +293,12 @@ Page({
       imageUrl: imageUrl,
       success: function (res) {
         // 转发成功
-        console.log("转发成功")
+        // console.log("转发成功")
       },
       fail: function (res) {
         // 转发失败
-        console.log("转发失败")
+        // console.log("转发失败")
       }
     }
   }
-
-
 });

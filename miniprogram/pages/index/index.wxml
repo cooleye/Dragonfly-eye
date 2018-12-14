@@ -1,8 +1,4 @@
 <view class="page">
-    <!-- <view class="page__hd">
-        <view class="page__title">Grid</view>
-        <view class="page__desc">九宫格</view>
-    </view> -->
     <view class="test-list">
 
      <navigator url='/pages/h2c/h2c'>
@@ -25,14 +21,7 @@
             识花草
         </view>
       </navigator>
-       
-      <navigator url='/pages/ani/ani'>
-        <view class='test-item bg2' url="/">
-        <image  class="icon-box" mode="widthFix" src="/images/animal.png"></image>
-            认动物
-        </view>
-      </navigator>
-       
+        
       <navigator url='/pages/food/food'>
         <view class='test-item bg3' url="/">
         <image  class="icon-box" mode="widthFix" src="/images/ct.png"></image>
@@ -40,16 +29,19 @@
         </view>
       </navigator>
 
-     
-       
+      <navigator url='/pages/ani/ani'>
+        <view class='test-item bg2' url="/">
+        <image  class="icon-box" mode="widthFix" src="/images/animal.png"></image>
+            认动物
+        </view>
+      </navigator>
     </view>
-
-
     <view class='footer'>
       <view class='footer-logo'>
-        <view><image class='logo' src='/images/camera.png' mode='scaleToFill'></image></view>
-        <view>蜻蜓眼</view>
-        <view style='font-size:30rpx;'>Dragonfly eye</view>
+        <view><image class='logo' src='/images/logo.png' mode='scaleToFill'></image></view>
+        <view style='font-size:36rpx;'>蜻蜓眼</view>
+        <view style='font-size:22rpx;'>Dragonfly eye</view>
+        <view style='font-size:18rpx;'>POWERED BY BAIDU AI</view>
       </view>
     </view>
 </view>

@@ -31,7 +31,7 @@ Page({
         let base64 = wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], 'base64')
 
         wx.showLoading({
-          title: "花卉分析中...",
+          title: "美食分析中...",
           mask: true
         })
 
@@ -70,7 +70,7 @@ Page({
   onShareAppMessage: function () {
 
     var imgIndex = Math.floor(Math.random() * 5);
-    var imageUrl = this.data.shareImgs[imgIndex];
+    var imageUrl = this.data.imgUrl || this.data.shareImgs[imgIndex];
 
     return {
       title: "作为吃货的你怎么能不知道这些菜叫什么",

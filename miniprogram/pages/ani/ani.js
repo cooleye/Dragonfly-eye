@@ -32,7 +32,7 @@ Page({
         let base64 = wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], 'base64')
 
         wx.showLoading({
-          title: "花卉分析中...",
+          title: "物种分析中...",
           mask: true
         })
 
@@ -71,10 +71,9 @@ Page({
   onShareAppMessage: function () {
 
     var imgIndex = Math.floor(Math.random() * 3);
-    var imageUrl = this.data.shareImgs[imgIndex];
-
+    var imageUrl = this.data.imgUrl || this.data.shareImgs[imgIndex];
     return {
-      title: "你知道这个二狗子是什么狗么？",
+      title: "你知道这个小可爱叫什么吗？",
       path: '/pages/index/index',
       imageUrl: imageUrl,
       success: function (res) {

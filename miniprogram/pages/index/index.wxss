@@ -24,6 +24,7 @@ page {
   margin: 10rpx;
   border-radius: 10rpx;
   box-shadow: 1px 2px 2px #c0c0c0;
+  text-shadow: 1px 1px 1px #666;
   /* transition: ease 0.1s all;
   transform: scale(1) */
 }
@@ -58,6 +59,7 @@ page {
 .logo{
   width: 100rpx;
   height: 80rpx;
+  margin-bottom: -20rpx;
 }
 
 .icon-box{
