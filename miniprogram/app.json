@@ -1,12 +1,13 @@
 {
   "pages": [
-    "pages/person/person",
     "pages/index/index",
+    "pages/person/person",
     "pages/flower/flower",
     "pages/face/face",
     "pages/ani/ani",
     "pages/food/food",
     "pages/h2c/h2c"
+
    
   ],
   "window": {

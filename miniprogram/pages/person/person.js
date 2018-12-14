@@ -116,14 +116,5 @@ Page({
         console.log("转发失败")
       }
     }
-  },
-  sharebtn: function(){
-    html2canvas(document.querySelector("#show_page"), {
-      scale: 3
-    }).then(canvas => {
-
-      $("#pic_page").append(canvas);
-      // document.body.appendChild(canvas)
-    });
   }
 });

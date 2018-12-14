@@ -5,7 +5,7 @@
     </view> -->
     <view class="test-list">
 
-     <navigator url='/pages/person/person'>
+     <navigator url='/pages/h2c/h2c'>
         <view class='test-item bg1' >
         <image  class="icon-box" mode="widthFix" src="/images/face.png"></image>
             测颜值
