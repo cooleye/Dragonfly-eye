@@ -25,7 +25,7 @@ Page({
       male:[
         "长得丑不是你的错",
         "你长得就像闹着玩一样",
-        "得那么随心所欲",
+        "长得那么随心所欲",
         "你这长相得多读点书啊！",
         "相貌平平",
         "自信的人最帅",
@@ -68,7 +68,7 @@ Page({
   },
   createImage: function () {
     let scale = 2; //图片放大两倍，更清晰
-    console.log(this.data.imgUrl)
+    // console.log(this.data.imgUrl)
     if (this.data.imgUrl == "/images/renbg.png"){
       wx.showToast({
         title: "上传一张图片先！",
@@ -206,7 +206,7 @@ Page({
         ctx.setFillStyle("#f00");   //设置字体颜色
         ctx.fillText(_this.data.nobody.beauty, 100, imageHeight + 60);  //设置字体内容、坐标
 
-        let bs = (_this.data.nobody.beauty - 0 + 15.67).toFixed(2);
+        let bs = (_this.data.nobody.beauty - 0 + 5.21).toFixed(2);
         bs = bs > 99.99 ? 99.99 : bs;
         let evaluates;
         if (_this.data.nobody.gender.type == "male"){
@@ -258,25 +258,35 @@ Page({
     })
   },
   showResult: function (result) {
-    let person = result.face_list[0];
-    let beauty = person.beauty;
-    if (beauty < 80) {
-      beauty += 10;
+    if(result){
+      let person = result.face_list[0];
+      let beauty = person.beauty;
+      if (beauty < 80) {
+        beauty += 20;
+      } else if (beauty >= 80 && beauty < 91) {
+        beauty += 5.21;
+      }
+      person.beauty = beauty.toFixed(2);
+
+      let emo = person.emotion.type;
+      emo = this.translateEmotion(emo);
+
+      person.emotion = {
+        type: emo
+      }
+
+      this.setData({
+        nobody: person,
+      })
+
+      this.draw2Canvas();
+    }else{
+      let nobody = { name: "这张图片不行哦，换一张吧" }
+      this.setData({
+        nobody: nobody
+      })
     }
-    person.beauty = beauty.toFixed(2);
-
-    let emo = person.emotion.type;
-    emo = this.translateEmotion(emo);
-
-    person.emotion = {
-      type: emo
-    }
-
-    this.setData({
-      nobody: person,
-    })
-
-    this.draw2Canvas();
+   
   },
   onShareAppMessage: function () {
 
@@ -285,10 +295,10 @@ Page({
     if (this.data.imgUrl == "/images/renbg.png"){
       imageUrl = this.data.shareImgs[imgIndex];
     }
-    
+    let beauty = this.data.nobody.beauty;
 
     return {
-      title: "我的颜值在人工智能眼中得了这些分，你的呢？",
+      title: "我的颜值在人工智能眼中得了:" + beauty+"分，你的呢？",
       path: '/pages/index/index',
       imageUrl: imageUrl,
       success: function (res) {

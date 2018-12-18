@@ -68,7 +68,7 @@ App({
       success: function (res) {
 
         if(res.statusCode == 200){
-          console.log(res)
+          // console.log(res)
           wx.setStorageSync("access_token", res.data.access_token);
           wx.setStorageSync("expires_in", res.data.expires_in);
           wx.setStorageSync("access_token_date", new Date().getTime());

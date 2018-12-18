@@ -18,6 +18,6 @@
 
   </view>
 
-  <button bindtap="doUpload" class="weui-btn mbtn" type="primary">上传图片</button>
+  <button bindtap="doUpload" class="weui-btn mbtn" type="primary">拍照上传</button>
 
 </view>

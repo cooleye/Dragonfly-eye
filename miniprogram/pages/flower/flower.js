@@ -54,16 +54,24 @@ Page({
     })
   },
   showResult: function (result) {
+    if(result){
       let len = result.length;
-      let nobody = {score:0};
-      for(let i = 0;i < len;i++){
-        if (result[i].score > nobody.score){
+      let nobody = { score: 0 };
+      for (let i = 0; i < len; i++) {
+        if (result[i].score > nobody.score) {
           nobody = result[i]
-          }
+        }
       }
       this.setData({
         nobody: nobody
       })
+    }else{
+      let nobody = { name: "这张图片不行哦，换一张吧" }
+      this.setData({
+        nobody: nobody
+      })
+    }
+     
   },
   onShareAppMessage: function () {
 

@@ -46,7 +46,7 @@ Page({
             baike_num: 1
           }, success: function (res) {
             wx.hideLoading();
-            console.log(res)
+            // console.log(res)
             if (res.statusCode == 200) {
               that.showResult(res.data.result);
             }
@@ -56,16 +56,24 @@ Page({
     })
   },
   showResult: function (result) {
-    let len = result.length;
-    let item = { probability: 0 };
-    for (let i = 0; i < len; i++) {
-      if (result[i].probability > item.probability) {
-        item = result[i]
+    if(result){
+      let len = result.length;
+      let item = { probability: 0 };
+      for (let i = 0; i < len; i++) {
+        if (result[i].probability > item.probability) {
+          item = result[i]
+        }
       }
+      this.setData({
+        nobody: item
+      })
+    }else{
+      let nobody = { name: "这张图片不行哦，换一张吧" }
+      this.setData({
+        nobody: nobody
+      })
     }
-    this.setData({
-      nobody: item
-    })
+    
   },
   onShareAppMessage: function () {
 

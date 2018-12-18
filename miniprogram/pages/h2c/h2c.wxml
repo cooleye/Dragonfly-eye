@@ -11,7 +11,7 @@
 
   <view  class='button-group'>
       <view></view>
-      <button bindtap="doUpload" class="weui-btn"  plain="true" type="primary">上传图片</button>
+      <button bindtap="doUpload" class="weui-btn"  plain="true" type="primary">拍照上传</button>
       <button bindtap="createImage" class="weui-btn" plain="true" type='warn'>保存图片</button>
   </view>
       <!-- <view class="uploader-container">
