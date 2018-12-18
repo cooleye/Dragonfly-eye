@@ -279,7 +279,27 @@ Page({
         nobody: person,
       })
 
-      this.draw2Canvas();
+      if(app.globalData.userInfo){
+        console.log('11111111')
+        this.draw2Canvas();
+      }else{
+        console.log('2222222222222')
+        wx.getUserInfo({
+          success: res => {
+            console.log(res)
+            app.globalData.userInfo = res.userInfo
+            this.setData({
+              userInfo: res.userInfo,
+              hasUserInfo: true
+            })
+            setTimeout(()=>{
+              this.draw2Canvas();
+            })
+          }
+        })
+      }
+
+     
     }else{
       let nobody = { name: "这张图片不行哦，换一张吧" }
       this.setData({
