@@ -15,7 +15,7 @@
        </view>
        </navigator> -->
 
-      <navigator url='/pages/flower/flower'>
+      <navigator url='/pages/flower/flower'  >
         <view class='test-item bg4' url="/">
         <image  class="icon-box" mode="widthFix" src="/images/flower.png"></image>
             识花草

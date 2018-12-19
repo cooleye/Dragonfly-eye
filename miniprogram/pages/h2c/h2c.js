@@ -47,8 +47,10 @@ Page({
     }
   },
   onReady: function () {
+    // console.log(" h2c onready...")
     //获取设备宽度，用于求所需画在画布上的图片的高度
     let _this = this;
+
     wx.getSystemInfo({success:function(res){
         _this.setData({
           windowWidth: res.windowWidth,
@@ -66,6 +68,9 @@ Page({
     }).exec();
  
   },
+  /**
+   * 把canvas上的图保存在相册
+   */
   createImage: function () {
     let scale = 2; //图片放大两倍，更清晰
     // console.log(this.data.imgUrl)
@@ -101,55 +106,94 @@ Page({
       })
     }
   },
+  /**
+   * 点击上传照片时间函数
+   * 在此获取用户授权，获得用户信息
+   */
   doUpload: function () {
+
+    if (app.globalData.userInfo) {
+      this.chooseImage()
+    } else {
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+        },
+        fail: ()=>{
+          app.globalData.userInfo = {nickName:"匿名"};
+        },
+        complete: ()=>{
+          setTimeout(()=>{
+            this.chooseImage()
+          })
+        }
+      })
+    }
+
+  },
+  /**
+   * 从相机拍摄照片或者从相册选择照片
+   */
+  chooseImage: function(){
     var that = this;
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        let tempImg = res.tempFilePaths[0];
-        let base64 = wx.getFileSystemManager().readFileSync(tempImg, 'base64')
 
         wx.showLoading({
           title: "人像分析中...",
           mask: true
         })
 
-       //请求接口
-        wx.request({
-          url: apiurl,
-          header: {
-            "content-type": "application/json"
-          },
-          method: "POST",
-          data: {
-            image: base64,
-            image_type: "BASE64",
-            face_field: "age,beauty,expression,face_shape,gender,glasses,race,emotion"
-          }, success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        let tempImg = res.tempFilePaths[0];
+        let base64 = wx.getFileSystemManager().readFileSync(tempImg, 'base64')
 
-            wx.hideLoading();
-            if (res.statusCode == 200 && res.data.error_code == 0) {
-              that.setData({
-                imgUrl: tempImg,
-                showResult: true
-              })
-
-              that.showResult(res.data.result);
-            } else {
-              wx.showToast({
-                title: '亲，换张图片吧',
-                icon:"",
-                duration:1000
-              })
-            }
-          }
-        })
+        that.requestapi(base64, tempImg);
       }
     })
   },
+ /**
+  * 请求接口百度AI接口
+  */
+  requestapi: function (base64, tempImg){
+   
+    var that = this;
+    wx.request({
+      url: apiurl,
+      header: {
+        "content-type": "application/json"
+      },
+      method: "POST",
+      data: {
+        image: base64,
+        image_type: "BASE64",
+        face_field: "age,beauty,expression,face_shape,gender,glasses,race,emotion"
+      }, success: function (res) {
+
+        wx.hideLoading();
+        if (res.statusCode == 200 && res.data.error_code == 0) {
+          that.setData({
+            imgUrl: tempImg,
+            showResult: true
+          })
+
+          that.showResult(res.data.result);
+        } else {
+          wx.showToast({
+            title: '亲，换张图片吧',
+            icon: "",
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+  /**
+   * 翻译情绪
+   */
   translateEmotion: function (emo) {
     let emo_zh = "未知";
     switch (emo) {
@@ -164,6 +208,9 @@ Page({
     }
     return emo_zh;
   },
+  /**
+   * 根据请求接口获得的数据，把结果画在canvas上
+   */
   draw2Canvas:function(){
     let _this = this;
     //获取图片信息
@@ -279,27 +326,8 @@ Page({
         nobody: person,
       })
 
-      if(app.globalData.userInfo){
-        console.log('11111111')
-        this.draw2Canvas();
-      }else{
-        console.log('2222222222222')
-        wx.getUserInfo({
-          success: res => {
-            console.log(res)
-            app.globalData.userInfo = res.userInfo
-            this.setData({
-              userInfo: res.userInfo,
-              hasUserInfo: true
-            })
-            setTimeout(()=>{
-              this.draw2Canvas();
-            })
-          }
-        })
-      }
+      this.draw2Canvas();
 
-     
     }else{
       let nobody = { name: "这张图片不行哦，换一张吧" }
       this.setData({
